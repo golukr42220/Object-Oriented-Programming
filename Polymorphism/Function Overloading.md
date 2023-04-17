@@ -172,7 +172,7 @@ In the main method, the variables has been created. Call the methods on them and
 5.858
 5 + 11i
 ```
-Use the getFormatted method to get the complex number in this format.
+Use the `getFormatted` method to get the complex number in this format.
 
 ```
 #include <bits/stdc++.h>
