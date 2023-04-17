@@ -251,19 +251,8 @@ templates is also a way to achieve compile-time polymorphism.
 Problem Statement:
 Given a class Pair which is used to store data in pairs.
  
-------------------------------------|
-|            *PairClass*            |
-|-----------------------------------|
-| - first:T                         |
-| - second:U                        |
-| ----------------------------------|
-| + PairClass(T first, U second)    |
-| + getFirst(): T                   |
-| + getSecond():U                   |
-| + setFirst(T first):void          |
-| + void setSecond(T second):void   |
--------------------------------------
-  UML Diagram for PairClass Class
+![image](https://user-images.githubusercontent.com/45598340/232588629-c646f17f-6205-489c-966b-9886a65dfb02.png)
+
   
   First and second can be of any data type irrespective of each other.
 
