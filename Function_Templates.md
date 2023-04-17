@@ -54,7 +54,7 @@ data_type max_num (data_type firstNumber, data_type secondNumber) {
 	return secondNumber;
 }
 
-``
+```
 Won't it be great if we can just write like this and the compiler takes care of all the other stuff. Turns out that C++ actually allows us to achieve this type of 
 polymorphism through something known as TEMPLATES!
 
@@ -159,7 +159,9 @@ Now, let's take another case.
 
 In the max_num example, let's say that we had to find the max of firstLong and firstInt like this:
 
+```
 cout << max_num(firstLong, firstInt) << endl;
+```
 Here, the return type is supposed to be long.
 
 Our template function won't work because both the parameters have the same template data type in our template function whereas in the function call, we have long and 
@@ -174,6 +176,7 @@ T max_num (T firstNumber, T secondNumber) {
 	return secondNumber;
 }
 ```
+	
 What can we do now?
 
 Just like having a template data type T, we can have another data type, say, U. We can rewrite the above code as:
@@ -187,9 +190,11 @@ T max_num (T firstNumber, U secondNumber) {
 	return secondNumber;
 }
 ```
+	
 Here, what is happening is that the first parameter will take data of type T, the second parameter will take data of type U and the function will return data of type T.
 
 In our example with long and int, the compiler will use this template to create a function like this:
+	
 ```
 long max_num (long firstNumber, int secondNumber) {
 	if (firstNumber > secondNumber) {
