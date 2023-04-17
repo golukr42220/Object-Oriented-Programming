@@ -96,9 +96,10 @@ Here,
 
 - template is a keyword to tell the compiler that we are creating a template.
 - class is used to tell the compiler that we are creating a datatype or class template.
-- identifier is used to tell the compiler what the name of the template would be. This is similar to naming a variable or macro and could be almost anything that we 
-- want to name it. In the above example it is data_type.
+- identifier is used to tell the compiler what the name of the template would be. This is similar to naming a variable or macro and could be 
+almost anything that we want to name it. In the above example it is data_type.
 Now, we would have to replace the data types everywhere in the function where we want to use a template data type which we have done like this in the above code:
+
 ```
 data_type max_num (data_type firstNumber, data_type secondNumber) {
 	if (firstNumber > secondNumber) {
@@ -109,18 +110,18 @@ data_type max_num (data_type firstNumber, data_type secondNumber) {
 ```
 In the above code, we have replaced the actual data types with the template type that we created.
 
-Now how this works internally is that during compilation, whenever the compiler comes across any function calls to a template function, it creates a new function
-based on the data types of the arguments.
+Now how this works internally is that during compilation, whenever the compiler comes across any function calls to a template function, 
+it creates a new function based on the data types of the arguments.
 
 The newly created function is then used for that particular function call.
 
-In our above example, all the 4 functions that we replaced with the template function will be created by the compiler as all 4 of them are supposed to be used in the 
-main method.
+In our above example, all the 4 functions that we replaced with the template function will be created by the compiler as all 4 of them are supposed
+to be used in the main method.
 
 Note: the function body needs to be exactly same across multiple functions to replace them with a template function.
 
-Note: For the identifier (template name), a shorter name like T is commonly used which we will be using henceforth. Use T as the template name instead of "data_type"
-(the name that we used in the previous example).
+Note: For the identifier (template name), a shorter name like T is commonly used which we will be using henceforth. Use T as the template name instead
+of "data_type" (the name that we used in the previous example).
 
 Create a template function in the below code for sum of two numbers
 ```
@@ -164,8 +165,8 @@ cout << max_num(firstLong, firstInt) << endl;
 ```
 Here, the return type is supposed to be long.
 
-Our template function won't work because both the parameters have the same template data type in our template function whereas in the function call, we have long and 
-int data as arguments. A function which can take these two as arguments can't be produced from this template function.
+Our template function won't work because both the parameters have the same template data type in our template function whereas in the function call,
+we have long and int data as arguments. A function which can take these two as arguments can't be produced from this template function.
 
 ```
 template <class T>
@@ -191,7 +192,8 @@ T max_num (T firstNumber, U secondNumber) {
 }
 ```
 	
-Here, what is happening is that the first parameter will take data of type T, the second parameter will take data of type U and the function will return data of type T.
+Here, what is happening is that the first parameter will take data of type T, the second parameter will take data of type U and the function will
+return data of type T.
 
 In our example with long and int, the compiler will use this template to create a function like this:
 	
@@ -205,8 +207,8 @@ long max_num (long firstNumber, int secondNumber) {
 ```
 So now our problem is solved! Will this also work for (int, int), (float, float), (long, long), (double, double)?
 
-The answer is yes. Here, T and U are independent of each other. T can be any data type, U can be any data type independent of each other. So it is possible to have T 
-being int and independently U also being int.
+The answer is yes. Here, T and U are independent of each other. T can be any data type, U can be any data type independent of each other. 
+So it is possible to have T being int and independently U also being int.
 
 Therefore, we can use the above template method for all the 5 use cases:
 ```
@@ -292,8 +294,8 @@ int main() {
 
 ```
 
-As we can see that the template can take both class and primitive data types (int, float, long, etc), it must be obvious that we can create a template where a class 
-object is passed as a parameter as well.
+As we can see that the template can take both class and primitive data types (int, float, long, etc), it must be obvious that we can create a template where
+a class object is passed as a parameter as well.
 
 *Examples*
 ```
