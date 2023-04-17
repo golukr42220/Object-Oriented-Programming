@@ -42,9 +42,9 @@ int main() {
 
 }
 
-``
-This is a very valid use case but the issue here is that we have to write a lot of code with the exact same logic. If you notice carefully, the only difference 
-between these functions is the data types being used. Each of the above functions can be logically written as:
+```
+This is a very valid use case but the issue here is that we have to write a lot of code with the exact same logic. If you notice carefully,
+the only difference between these functions is the data types being used. Each of the above functions can be logically written as:
 
 ```
 data_type max_num (data_type firstNumber, data_type secondNumber) {
@@ -55,8 +55,8 @@ data_type max_num (data_type firstNumber, data_type secondNumber) {
 }
 
 ```
-Won't it be great if we can just write like this and the compiler takes care of all the other stuff. Turns out that C++ actually allows us to achieve this type of 
-polymorphism through something known as TEMPLATES!
+Won't it be great if we can just write like this and the compiler takes care of all the other stuff. Turns out that C++ actually allows us to
+achieve this type of polymorphism through something known as TEMPLATES!
 
 Let's see it in action. Run the below code:
 
@@ -87,7 +87,8 @@ int main() {
 }
 ```
 
-As you can see that we have been able to replace the four functions with just a single function by using templates. Let's look at how to use templates:
+As you can see that we have been able to replace the four functions with just a single function by using templates. 
+Let's look at how to use templates:
 
 ```
 template <class identifier>
@@ -96,9 +97,10 @@ Here,
 
 - template is a keyword to tell the compiler that we are creating a template.
 - class is used to tell the compiler that we are creating a datatype or class template.
-- identifier is used to tell the compiler what the name of the template would be. This is similar to naming a variable or macro and could be 
-almost anything that we want to name it. In the above example it is data_type.
-Now, we would have to replace the data types everywhere in the function where we want to use a template data type which we have done like this in the above code:
+- identifier is used to tell the compiler what the name of the template would be. This is similar to naming a variable or macro 
+and could be almost anything that we want to name it. In the above example it is data_type.
+Now, we would have to replace the data types everywhere in the function where we want to use a template data type which we have done 
+like this in the above code:
 
 ```
 data_type max_num (data_type firstNumber, data_type secondNumber) {
@@ -115,13 +117,13 @@ it creates a new function based on the data types of the arguments.
 
 The newly created function is then used for that particular function call.
 
-In our above example, all the 4 functions that we replaced with the template function will be created by the compiler as all 4 of them are supposed
-to be used in the main method.
+In our above example, all the 4 functions that we replaced with the template function will be created by the compiler as all 4 of 
+them are supposed to be used in the main method.
 
 Note: the function body needs to be exactly same across multiple functions to replace them with a template function.
 
-Note: For the identifier (template name), a shorter name like T is commonly used which we will be using henceforth. Use T as the template name instead
-of "data_type" (the name that we used in the previous example).
+Note: For the identifier (template name), a shorter name like T is commonly used which we will be using henceforth. Use T as 
+the template name instead of "data_type" (the name that we used in the previous example).
 
 Create a template function in the below code for sum of two numbers
 ```
@@ -165,8 +167,9 @@ cout << max_num(firstLong, firstInt) << endl;
 ```
 Here, the return type is supposed to be long.
 
-Our template function won't work because both the parameters have the same template data type in our template function whereas in the function call,
-we have long and int data as arguments. A function which can take these two as arguments can't be produced from this template function.
+Our template function won't work because both the parameters have the same template data type in our template function whereas in the 
+function call, we have long and int data as arguments. A function which can take these two as arguments can't be produced from this 
+template function.
 
 ```
 template <class T>
@@ -218,7 +221,8 @@ Therefore, we can use the above template method for all the 5 use cases:
 (double, double)
 (long, int)
 ```
-As you can notice, the template is not just restricted to these 5 pairs of arguments. (int, long), (float, int) and any other pair of data types will be valid here.
+As you can notice, the template is not just restricted to these 5 pairs of arguments. (int, long), (float, int) and any other pair of data 
+types will be valid here.
 
 Let's rewrite the previous code to use the template with T and U:
 ```
@@ -294,8 +298,8 @@ int main() {
 
 ```
 
-As we can see that the template can take both class and primitive data types (int, float, long, etc), it must be obvious that we can create a template where
-a class object is passed as a parameter as well.
+As we can see that the template can take both class and primitive data types (int, float, long, etc), it must be obvious that we 
+can create a template where a class object is passed as a parameter as well.
 
 *Examples*
 ```
