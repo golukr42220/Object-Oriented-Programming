@@ -19,8 +19,8 @@ This type of polymorphism is achieved by Function Overriding. Late binding and d
 
 The compiler maintains two things to serve this purpose:
 
-- [vtable]([url](https://en.wikipedia.org/wiki/Virtual_method_table)) : A table of function pointers, maintained per class. 
-- ([vptr](https://en.wikipedia.org/wiki/Virtual_method_table#Implementation)): A pointer to vtable, maintained per object instance (see  [this]([url](https://www.geeksforgeeks.org/c-virtual-functions-question-12/)) for an example).
+- [vtable](https://en.wikipedia.org/wiki/Virtual_method_table) : A table of function pointers, maintained per class. 
+- [vptr](https://en.wikipedia.org/wiki/Virtual_method_table#Implementation): A pointer to vtable, maintained per object instance (see  [this]([url](https://www.geeksforgeeks.org/c-virtual-functions-question-12/)) for an example).
 
 ![image](https://user-images.githubusercontent.com/45598340/232894844-dd70ce88-3a21-43f5-a1c9-44958afba701.png)
 
