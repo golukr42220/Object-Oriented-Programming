@@ -2,6 +2,10 @@
 
 [C++ Tutorial(Free Courses)](https://www.scaler.com/topics/cpp/)
 
+[Experienced C++ Interview Questions](https://www.youtube.com/watch?v=bFtkHJy9kIU&t=3847s)
+
+[CppNuts Lectures](https://www.youtube.com/@CppNuts/playlists)
+
 [takeUforward](https://www.youtube.com/c/takeUforward)
 
 [Complete C++ Placement DSA Course](https://www.youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA)
