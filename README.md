@@ -6,7 +6,7 @@
 
 [Complete C++ Placement DSA Course](https://www.youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA)
 
-[C++ Full Course | Data Structures & Algorithms]([ C++ Tutorial | Data Structures & Algorithms](https://www.youtube.com/playlist?list=PLfqMhTWNBTe0b2nM6JHVCnAkhQRGiZMSJ)
+[C++ Full Course | Data Structures / Algorithms](https://www.youtube.com/playlist?list=PLfqMhTWNBTe0b2nM6JHVCnAkhQRGiZMSJ)
 
 [Competitive Programming/DSA Course](https://www.youtube.com/playlist?list=PLauivoElc3ggagradg8MfOZreCMmXMmJ-)
 
