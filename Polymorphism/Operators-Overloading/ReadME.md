@@ -3,7 +3,9 @@
 - Three way we can overload Operator
 
 **1-** Overloading the arithmetic operators using friend functions
+
 **2-** Overloading operators using normal functions
+
 **3-** Overloading operators using member functions
 
 [Learn here in details](https://www.learncpp.com/)
