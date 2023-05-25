@@ -156,7 +156,7 @@ int main () {
 A virtual function is a member function which is declared within a base class and is re-defined (overridden) by a derived class. When you refer to a derived class object using a pointer or a reference to the base class, you can call a virtual function for that object and execute the derived class’s version of the function. 
 
 - Virtual functions ensure that the correct function is called for an object, regardless of the type of reference (or pointer) used for function call.
-- They are mainly used to achieve [Runtime polymorphism]([url](https://www.geeksforgeeks.org/cpp-polymorphism/))
+- They are mainly used to achieve [Runtime polymorphism](https://www.geeksforgeeks.org/cpp-polymorphism/)
 - Functions are declared with a virtual keyword in base class.
 - The resolving of function call is done at runtime.
 
@@ -167,7 +167,7 @@ A virtual function is a member function which is declared within a base class an
 3. Virtual functions should be accessed using pointer or reference of base class type to achieve runtime polymorphism.
 4. The prototype of virtual functions should be the same in the base as well as derived class.
 5. They are always defined in the base class and overridden in a derived class. It is not mandatory for the derived class to override (or re-define the virtual function), in that case, the base class version of the function is used.
-6. A class may have [virtual destructor]([url](https://www.geeksforgeeks.org/virtual-destructor/)) but it cannot have a virtual constructor.
+6. A class may have [virtual destructor](https://www.geeksforgeeks.org/virtual-destructor/) but it cannot have a virtual constructor.
 
 **Compile time (early binding) VS runtime (late binding) behavior of Virtual Functions**
 Consider the following simple program showing runtime behavior of virtual functions.
@@ -232,9 +232,10 @@ Late binding (Runtime) is done in accordance with the content of pointer (i.e. l
 
 **Working of virtual functions (concept of VTABLE and VPTR)**
 
-As discussed [here]([url](https://www.geeksforgeeks.org/virtual-functions-and-runtime-polymorphism-in-cpp/)), if a class contains a virtual function then compiler itself does two things.
+As  [discussed](https://www.geeksforgeeks.org/virtual-functions-and-runtime-polymorphism-in-cpp/), if a class contains a virtual function then compiler itself does two things.
 
 **1.** If object of that class is created then a virtual pointer (VPTR) is inserted as a data member of the class to point to VTABLE of that class. For each new object created, a new virtual pointer is inserted as a data member of that class.
+
 **2.** Irrespective of object is created or not, class contains as a member a static array of function pointers called VTABLE. Cells of this table store the address of each virtual function contained in that class.
 Consider the example below: 
 
