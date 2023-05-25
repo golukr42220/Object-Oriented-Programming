@@ -68,7 +68,8 @@ class IndividualContributor: public Employee{
 	
 	int manager;
 	
-	public:IndividualContributor(int id, string name, long salary, int manager):Employee(id, name,salary){
+	public:
+	 IndividualContributor(int id, string name, long salary, int manager):Employee(id, name,salary){
 		this->manager=manager;
 	}
 	int getManager() { return manager;}
