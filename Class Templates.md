@@ -110,9 +110,10 @@ We have already learned in the previous section how to explicitly mention the da
 max_num<int>(firstInt, secondInt)
 The same thing can be done here as well like this:
 
--ArrayClass<int> array(10);
--ArrayClass<float> array2(10);
--ArrayClass<Employee> array3(10);
+ - ArrayClass`<int>` array(10);
+ - ArrayClass`<float>` array2(10);
+ - ArrayClass`<Employee>` array3(10);
+	
 Class Templates are very commonly used in C++ Standard Template Library (STL).
 
 The UML diagram for the above class would be:
@@ -134,15 +135,15 @@ The UML diagram for the above class would be:
   
   Let's modify the below code to use templates
 
--Templatize the Stack class in the editor to allow the container array to work for non-int elements as well.
--Modify the object creation in the main method to work with the templatized Stack class.
--I've added comments wherever you need to templatize. Modify only those parts.
--Just focus on the templatizing part and the object creation part.
--You can ignore the logic for now.
+- Templatize the Stack class in the editor to allow the container array to work for non-int elements as well.
+- Modify the object creation in the main method to work with the templatized Stack class.
+- I've added comments wherever you need to templatize. Modify only those parts.
+- Just focus on the templatizing part and the object creation part.
+- You can ignore the logic for now.
 
   *Expected Output*
   
-  ```
+```
 0 1 0
 5 0 1
 0 1 0
@@ -155,6 +156,7 @@ w 0 1
 ```
 
 ```
+	
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -258,7 +260,7 @@ Given a class Pair which is used to store data in pairs.
 
 *Examples*
   
- ```
+```
 firstPair => (4, 2)
 secondPair => (3.14, 2.718)
 thirdPair => ("Hello", 3.14)
@@ -266,15 +268,16 @@ thirdPair => ("Hello", 3.14)
 
 Implementation Details:
 
-- All get and set functions are normal getters and setters.
-- `getFirst` returns `first`
-- `getSecond` returns `second`
-- `setFirst` takes first as argument and assigns it to the attribute `first`.
-- `setSecond` takes second as argument and assigns it to the attribute `second`.
-- In the main method, create three pairs with the following values:
-- `firstPair` => (4, 2)
-- `secondPair` => (3.14, 2.718)
-- `thirdPair` => ("Hello", 3.14)
+-  All get and set functions are normal getters and setters.
+-  `getFirst` returns `first`
+-  `getSecond` returns `second`
+-  `setFirst` takes first as argument and assigns it to the attribute `first`.
+-  `setSecond` takes second as argument and assigns it to the attribute `second`.
+-  In the main method, create three pairs with the following values:
+-  `firstPair` => (4, 2)
+-  `secondPair` => (3.14, 2.718)
+-  `thirdPair` => ("Hello", 3.14)
+	
 Do not modify anything in the code after the "DO NOT MODIFY AFTER THIS" comment.
 
  *Expected Output*
