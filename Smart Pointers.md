@@ -287,7 +287,8 @@ int main()
     // You can print the number of pointers pointing to that location with the help of the use_count() method
     cout << P1.use_count() << endl;
     // This'll print 2 as Reference Counter is 2
-    // The memory will only be freed when both the pointers P1 and P2 have gone out of scope or released the ownership of the location.
+    // The memory will only be freed when both the pointers P1 and P2 have gone out of scope or
+    //released the ownership of the location.
 
     return 0;
 }
@@ -334,13 +335,15 @@ int main()
     
 **This prints:**
 
- ```
+```
 Resource acquired
 Killing one shared pointer
 Killing another shared pointer
 Resource destroyed
 ```
-    In the above code, we create a dynamic Resource object, and set a `std::shared_ptr` named `ptr1` to manage it. Inside the nested block, we use the copy constructor to create a second `std::shared_ptr (ptr2)` that points to the same Resource. When `ptr2` goes out of scope, the Resource is not deallocated, because `ptr1` is still pointing at the Resource. When `ptr1` goes out of scope, `ptr1` notices there are no more `std::shared_ptr` managing the Resource, so it deallocates the Resource.
+
+In the above code, we create a dynamic Resource object, and set a `std::shared_ptr` named `ptr1` to manage it. Inside the nested block, we use the copy constructor to create a second `std::shared_ptr (ptr2)` that points to the same Resource. When `ptr2` goes out of scope, the Resource is not deallocated, because `ptr1` is still pointing at the Resource. When `ptr1` goes
+out of scope, `ptr1` notices there are no more `std::shared_ptr` managing the Resource, so it deallocates the Resource.
 
 - **Note** that we created a second shared pointer from the first shared pointer. This is important. Consider the following similar program:
    
