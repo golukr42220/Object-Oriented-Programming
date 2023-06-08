@@ -69,10 +69,12 @@ from the previous one. Let's talk about the most common ones and see how and whe
 
 The `unique_ptr` is one of the most common smart pointers. If you are not sure which smart pointer to use, this is the pointer you should go with.
 
-The `unique_ptr`, as the name suggests, holds a unique pointer, i.e., the memory held by this pointer cannot be represented by any other pointer. This will be the only pointer that holds
+- The `unique_ptr`, as the name suggests, holds a unique pointer, i.e., the memory held by this pointer cannot be represented by any other pointer. This will be the only pointer that holds
 that memory. You will not be allowed to create another copy of the pointer. While the memory held by the pointer cannot be copied or shared by any other pointer, you can always move it to a 
 `new` pointer. This can be achieved by the `move()` function of the C++ Standard Template Library.
 
+- **std::unique_ptr** is the C++11 replacement for `std::auto_ptr`. It should be used to manage any dynamically allocated object that is not shared by multiple objects. That is, `std::unique_ptr` should completely own the object it manages, not share that ownership with other classes. `std::unique_ptr` lives in the <memory> header.
+    
 ![image](https://github.com/golukr42220/Object-Oriented-Programming/assets/45598340/1d865de6-0b6e-4a28-a9aa-5424d7c920ae)
 
 Syntax :
@@ -115,6 +117,120 @@ int main()
 In this example given above, we create a `new` pointer variable ptr for an integer value of `13` within the function called `my_func()`. Then we perform some operations and then `move` 
 the `unique` pointer to a new variable called `ptr2`. And then we check a condition called `x=45` and when it evaluates to be true we just return from the function.
 We don't bother to `free` the memory we created, because that will be automatically taken care of by the `smart` pointer.
+
+****Another Example****
+    
+```cpp
+#include <iostream>
+#include <memory> // for std::unique_ptr
+
+class Resource
+{
+public:
+	Resource() { std::cout << "Resource acquired\n"; }
+	~Resource() { std::cout << "Resource destroyed\n"; }
+};
+
+int main()
+{
+	// allocate a Resource object and have it owned by std::unique_ptr
+	std::unique_ptr<Resource> res{ new Resource() };
+
+	return 0;
+} // res goes out of scope here, and the allocated Resource is destroyed
+```
+
+Because the std::unique_ptr is allocated on the stack here, it’s guaranteed to eventually go out of scope, and when it does, it will delete the Resource it is managing.
+
+Unlike `std::auto_ptr, std::unique_ptr` properly implements move semantics.
+
+```cpp
+    #include <iostream>
+#include <memory> // for std::unique_ptr
+#include <utility> // for std::move
+
+class Resource
+{
+public:
+	Resource() { std::cout << "Resource acquired\n"; }
+	~Resource() { std::cout << "Resource destroyed\n"; }
+};
+
+int main()
+{
+	std::unique_ptr<Resource> res1{ new Resource{} }; // Resource created here
+	std::unique_ptr<Resource> res2{}; // Start as nullptr
+
+	std::cout << "res1 is " << (res1 ? "not null\n" : "null\n");
+	std::cout << "res2 is " << (res2 ? "not null\n" : "null\n");
+
+	// res2 = res1; // Won't compile: copy assignment is disabled
+	res2 = std::move(res1); // res2 assumes ownership, res1 is set to null
+
+	std::cout << "Ownership transferred\n";
+
+	std::cout << "res1 is " << (res1 ? "not null\n" : "null\n");
+	std::cout << "res2 is " << (res2 ? "not null\n" : "null\n");
+
+	return 0;
+} // Resource destroyed here when res2 goes out of scope
+```
+  
+**This prints:**
+```
+Resource acquired
+res1 is not null
+res2 is null
+Ownership transferred
+res1 is null
+res2 is not null
+Resource destroyed
+```
+    
+Because `std::unique_ptr` is designed with move semantics in mind, copy initialization and copy assignment are disabled. If you want to transfer the contents managed by `std::unique_ptr`, you must use move semantics. In the program above, we accomplish this via `std::move` (which converts res1 into an r-value, which triggers a move assignment instead of a copy assignment).
+
+****Accessing the managed object****
+
+`std::unique_ptr` has an overloaded `operator*` and `operator->`that can be used to return the resource being managed. `Operator*` returns a `reference` to the managed resource, and `operator->` returns a `pointer`.
+
+Remember that `std::unique_ptr` may not always be managing an object -- either because it was created empty (using the default constructor or passing in a nullptr as the parameter), or because the resource it was managing got moved to another `std::unique_ptr`. So before we use either of these operators, we should check whether the std::unique_ptr actually has a resource. Fortunately, this is easy: `std::unique_ptr` has a cast to bool that returns true if the `std::unique_ptr` is managing a resource.
+    
+ ```cpp
+    #include <iostream>
+#include <memory> // for std::unique_ptr
+
+class Resource
+{
+public:
+	Resource() { std::cout << "Resource acquired\n"; }
+	~Resource() { std::cout << "Resource destroyed\n"; }
+	friend std::ostream& operator<<(std::ostream& out, const Resource &res)
+	{
+		out << "I am a resource";
+		return out;
+	}
+};
+
+int main()
+{
+	std::unique_ptr<Resource> res{ new Resource{} };
+
+	if (res) // use implicit cast to bool to ensure res contains a Resource
+		std::cout << *res << '\n'; // print the Resource that res is owning
+
+	return 0;
+}
+```
+    
+**This prints:**
+```
+Resource acquired
+I am a resource
+Resource destroyed
+```
+    
+In the above program, we use the overloaded `operator*` to get the Resource object owned by `std::unique_ptr` res, which we then send to `std::cout` for printing.
+
 
 ------------------------------------------------------------------------------------------------------------------------------------
 - ****2. Shared_ptr****
@@ -182,7 +298,98 @@ int main()
 In this example given above, we create `2` shared pointers named `p1` and `p2` for a class called Articles. And we work with them. The memory gets freed only when both the variables `p1` and `p2`
 goes out of scope.
 
+- ****Another Example****
 
+ Unlike std::unique_ptr, which is designed to singly own and manage a resource, `std::shared_ptr` is meant to solve the case where you need multiple smart pointers co-owning a resource.
+    
+ This means that it is fine to have multiple `std::shared_ptr` pointing to the same resource. Internally, `std::shared_ptr` keeps track of how many `std::shared_ptr` are sharing the resource. As long as at least one `std::shared_ptr` is pointing to the resource, the resource will not be deallocated, even if individual `std::shared_ptr` are destroyed. As soon as the last `std::shared_ptr` managing the resource goes out of scope (or is reassigned to point at something else), the resource will be deallocated.
+
+```cpp
+#include <iostream>
+#include <memory> // for std::shared_ptr
+
+class Resource
+{
+public:
+	Resource() { std::cout << "Resource acquired\n"; }
+	~Resource() { std::cout << "Resource destroyed\n"; }
+};
+
+int main()
+{
+	// allocate a Resource object and have it owned by std::shared_ptr
+	Resource* res { new Resource };
+	std::shared_ptr<Resource> ptr1{ res };
+	{
+		std::shared_ptr<Resource> ptr2 { ptr1 }; // make another std::shared_ptr pointing to the same thing
+
+		std::cout << "Killing one shared pointer\n";
+	} // ptr2 goes out of scope here, but nothing happens
+
+	std::cout << "Killing another shared pointer\n";
+
+	return 0;
+} // ptr1 goes out of scope here, and the allocated Resource is destroyed
+```
+    
+**This prints:**
+
+ ```
+Resource acquired
+Killing one shared pointer
+Killing another shared pointer
+Resource destroyed
+```
+    In the above code, we create a dynamic Resource object, and set a `std::shared_ptr` named `ptr1` to manage it. Inside the nested block, we use the copy constructor to create a second `std::shared_ptr (ptr2)` that points to the same Resource. When `ptr2` goes out of scope, the Resource is not deallocated, because `ptr1` is still pointing at the Resource. When `ptr1` goes out of scope, `ptr1` notices there are no more `std::shared_ptr` managing the Resource, so it deallocates the Resource.
+
+- **Note** that we created a second shared pointer from the first shared pointer. This is important. Consider the following similar program:
+   
+```cpp
+#include <iostream>
+#include <memory> // for std::shared_ptr
+
+class Resource
+{
+public:
+	Resource() { std::cout << "Resource acquired\n"; }
+	~Resource() { std::cout << "Resource destroyed\n"; }
+};
+
+int main()
+{
+	Resource* res { new Resource };
+	std::shared_ptr<Resource> ptr1 { res };
+	{
+		std::shared_ptr<Resource> ptr2 { res }; // create ptr2 directly from res (instead of ptr1)
+
+		std::cout << "Killing one shared pointer\n";
+	} // ptr2 goes out of scope here, and the allocated Resource is destroyed
+
+	std::cout << "Killing another shared pointer\n";
+
+	return 0;
+} // ptr1 goes out of scope here, and the allocated Resource is destroyed again
+```
+    
+**This program prints:**
+```
+Resource acquired
+Killing one shared pointer
+Resource destroyed
+Killing another shared pointer
+Resource destroyed
+```
+    
+and then crashes (at least on the author’s machine).
+
+The difference here is that we created two` std::shared_ptr` independently from each other. As a consequence, even though they’re both pointing to the same Resource, they aren’t aware of each other. When `ptr2` goes out of scope, it thinks it’s the only owner of the Resource, and deallocates it. When `ptr1` later goes out of the scope, it thinks the same thing, and tries to delete the Resource again. Then bad things happen.
+
+Fortunately, this is easily avoided: if you need more than one `std::shared_ptr` to a given resource, copy an existing `std::shared_ptr`.
+
+**Best practice**
+
+Always make a copy of an existing `std::shared_ptr` if you need more than one `std::shared_ptr` pointing to the same resource.
+    
 --------------------------------------------------------------------------------------------------------------
 
 - ****3. Weak_ptr****
