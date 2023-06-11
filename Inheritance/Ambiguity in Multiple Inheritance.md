@@ -1,8 +1,10 @@
-****Ambiguity in Multiple Inheritance****
 
-The Inheritance is one of the most important concepts in object-oriented C++ programming as in other features of Classes. Inheritance allows us to define a class in terms of another class,
-and it makes it easier to create and maintain an application. This also provides an opportunity to reuse the code functionality and fast implementation time. Inheritance implements the
-relationship between classes. 
+- ****Ambiguity Resolution in Inheritance****
+
+
+Ambiguity in inheritance can be defined as when one class is derived for two or more base classes then there are chances that the base classes have functions with the same name. So it will confuse derived class to choose from similar name functions. To solve this ambiguity scope resolution operator is used “::”. An example program is shown below to demonstrate the concept of ambiguity resolution in inheritance.
+
+- ****Ambiguity in Multiple Inheritance****
 
 Multiple Inheritance is another feature of C++ that a class can inherit from more than one class. For example, a derived class can be inherited from more than one base class or derived classes.
 
