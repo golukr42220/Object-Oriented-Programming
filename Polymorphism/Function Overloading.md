@@ -225,8 +225,23 @@ int main() {
 	cout << firstDouble + secondDouble<<endl;
 	//Call and Print the sum methods for firstComplex and secondComplex
 	 
-	  ComplexNumber complexNumber2(complexNumber.getRealPart() +       complexNumber1.getRealPart(), complexNumber.getImaginaryPart() + complexNumber1.getImaginaryPart() );
+	  ComplexNumber complexNumber2(complexNumber.getRealPart() + complexNumber1.getRealPart(), 
+	                complexNumber.getImaginaryPart() + complexNumber1.getImaginaryPart() );
 	 cout<< complexNumber2.getFormatted();
 	return 0;
 }
 ```
+
+-----------------------------------------------------------------------------------------------------
+
+**Ques** How compilers work internally to differentiate function overloding.
+
+****Name mangling****
+
+- When the compiler compiles a function, it performs name mangling, which means the compiled name of the function is altered (“mangled”) based on various criteria, such as the number and type 
+of parameters, so that the linker has unique names to work with.
+
+For example, some function with prototype int fcn() might compile to name __fcn_v, whereas int fcn(int) might compile to name __fcn_i. So while in the source code, two overloaded functions
+share a name, in compiled code, the names are actually unique.
+
+There is no standardization on how names should be mangled, so different compilers will produce different mangled names.
