@@ -1,8 +1,9 @@
 
-It turns out that there are three different ways to overload operators: the member function way, the friend function way, and the normal function way. 
+## It turns out that there are three different ways to overload operators: the member function way, the friend function way, and the normal function way. 
 
 ##  [Overloading the subtraction operator (+) or Overloading the subtraction operator (-)](https://www.learncpp.com/cpp-tutorial/overloading-the-arithmetic-operators-using-friend-functions/)
 
+## [ I/O operators - Overloading operator<< or Overloading operator>>](https://www.learncpp.com/cpp-tutorial/overloading-the-io-operators/)
 ```cpp
 #include <iostream>
 
@@ -252,3 +253,246 @@ finally, `MinMax(3, 15) + 16` evaluates to `MinMax(3, 16)`. This final result is
 
 In other words, this expression evaluates as `“MinMax mFinal = (((((m1 + m2) + 5) + 8) + m3) + 16)”,` with each successive operation returning a MinMax object that becomes the left-hand operand 
 for the following operator.
+
+-------------------------------------------------------------------------------------
+
+## Overloading operator<<
+
+Overloading operator<< is similar to overloading operator+ (they are both binary operators), except that the parameter types are different.
+
+Consider the expression std::cout << point. If the operator is `<<`, what are the operands? The `left operand` is the `std::cout` object, and the `right` operand is your `Point` class object. 
+`std::cout` is actually an object of type `std::ostream`. Therefore, our overloaded function will look like this:
+
+```cpp
+// std::ostream is the type for object std::cout
+friend std::ostream& operator<< (std::ostream& out, const Point& point);
+```
+
+Implementation of operator<< for our Point class is fairly straightforward -- because C++ already knows how to output doubles using `operator<<`, and our members are all doubles, we can simply use `operator<<` to output the member variables of our Point. Here is the above Point class with the overloaded `operator<<`.
+
+```cpp
+#include <iostream>
+
+class Point
+{
+private:
+    double m_x{};
+    double m_y{};
+    double m_z{};
+
+public:
+    Point(double x=0.0, double y=0.0, double z=0.0)
+      : m_x{x}, m_y{y}, m_z{z}
+    {
+    }
+
+    friend std::ostream& operator<< (std::ostream& out, const Point& point);
+};
+
+std::ostream& operator<< (std::ostream& out, const Point& point)
+{
+    // Since operator<< is a friend of the Point class, we can access Point's members directly.
+    out << "Point(" << point.m_x << ", " << point.m_y << ", " << point.m_z << ')'; // actual output done here
+
+    return out; // return std::ostream so we can chain calls to operator<<
+}
+
+int main()
+{
+  //  const Point point1{2.0, 3.0, 4.0};
+    
+    Point point1{2.0, 3.5, 4.0};
+    Point point2{6.0, 7.5, 8.0};
+
+    std::cout << point1 << ' ' << point2 << '\n';
+
+    return 0;
+}
+```
+
+This is pretty straightforward -- note how similar our output line is to the line in the print() function we wrote previously. The most notable difference is that `std::cout` has become 
+parameter out (which will be a reference to std::cout when the function is called).
+
+The trickiest part here is the return type. With the arithmetic operators, we calculated and returned a single answer by value (because we were creating and returning a new result).
+However, if you try to return std::ostream by value, you’ll get a compiler error. This happens because std::ostream specifically disallows being copied.
+
+In this case, we return the left hand parameter as a reference. This not only prevents a copy of std::ostream from being made, it also allows us to `“chain”` output commands together, such as `std::cout << point << std::endl;`
+
+Consider what would happen if our `operator<<` returned void instead. When the compiler evaluates `std::cout << point << '\n',` due to the precedence/associativity rules, it evaluates this expression as `(std::cout << point) << '\n';`. std::cout << point would call our void-returning overloaded `operator<<` function, which returns void. Then the partially evaluated expression becomes: `void << '\n';`, which makes no sense!
+
+By returning the out parameter as the return type instead, `(std::cout<< point) returns std::cout.` Then our partially evaluated expression becomes: `std::cout << '\n';`, which then gets evaluated itself!
+
+Any time we want our overloaded binary operators to be chainable in such a manner, the `left` operand should be returned `(by reference)`. Returning the `left-hand parameter` by reference is okay in this case -- since the` left-hand` parameter was passed in by the calling function, it must still exist when the called function returns. Therefore, we don’t have to worry about referencing something that will go out of scope and get destroyed when the operator returns.
+
+
+--------------------------------------------------------------------------------------------------
+
+## Overloading operator>>
+
+It is also possible to overload the input operator. This is done in a manner analogous to overloading the output operator. The key thing you need to know is that std::cin is an object of type std::istream. Here’s our Point class with an overloaded operator>>:
+
+```cpp
+#include <iostream>
+
+class Point
+{
+private:
+    double m_x{};
+    double m_y{};
+    double m_z{};
+
+public:
+    Point(double x=0.0, double y=0.0, double z=0.0)
+      : m_x{x}, m_y{y}, m_z{z}
+    {
+    }
+
+    friend std::ostream& operator<< (std::ostream& out, const Point& point);
+    friend std::istream& operator>> (std::istream& in, Point& point);
+};
+
+std::ostream& operator<< (std::ostream& out, const Point& point)
+{
+    // Since operator<< is a friend of the Point class, we can access Point's members directly.
+    out << "Point(" << point.m_x << ", " << point.m_y << ", " << point.m_z << ')';
+
+    return out;
+}
+
+std::istream& operator>> (std::istream& in, Point& point)
+{
+    // Since operator>> is a friend of the Point class, we can access Point's members directly.
+    // note that parameter point must be non-const so we can modify the class members with the input values
+    in >> point.m_x;
+    in >> point.m_y;
+    in >> point.m_z;
+
+    return in;
+}
+```
+
+Here’s a sample program using both the overloaded operator<< and operator>>:
+
+```cpp
+int main()
+{
+    std::cout << "Enter a point: ";
+
+    Point point;
+    std::cin >> point;
+
+    std::cout << "You entered: " << point << '\n';
+
+    return 0;
+}
+```
+
+Assuming the user enters 3.0 4.5 7.26 as input, the program produces the following result:
+
+`You entered: Point(3, 4.5, 7.26)`
+
+****Conclusion****
+
+Overloading `operator<< and operator>>` make it extremely easy to output your class to screen and accept user input from the console.
+
+-------------------------------------------------------------------------------------------------
+
+## Question Take the Fraction class we wrote in the previous quiz (listed below) and add an overloaded operator<< and operator>> to it.
+
+```cpp
+#include <iostream>
+#include <limits>
+#include <numeric> // for std::gcd
+
+class Fraction
+{
+private:
+	int m_numerator{ 0 };
+	int m_denominator{ 1 };
+
+public:
+	Fraction(int numerator=0, int denominator = 1) :
+		m_numerator{ numerator }, m_denominator{ denominator }
+	{
+		// We put reduce() in the constructor to ensure any new fractions we make get reduced!
+		// Any fractions that are overwritten will need to be re-reduced
+		reduce();
+	}
+
+	void reduce()
+	{
+		int gcd{ std::gcd(m_numerator, m_denominator) };
+		if (gcd)
+		{
+			m_numerator /= gcd;
+			m_denominator /= gcd;
+		}
+	}
+
+	friend Fraction operator*(const Fraction& f1, const Fraction& f2);
+	friend Fraction operator*(const Fraction& f1, int value);
+	friend Fraction operator*(int value, const Fraction& f1);
+
+	friend std::ostream& operator<<(std::ostream& out, const Fraction& f1);
+	friend std::istream& operator>>(std::istream& in, Fraction& f1);
+
+	void print()
+	{
+		std::cout << m_numerator << '/' << m_denominator << '\n';
+	}
+};
+
+Fraction operator*(const Fraction& f1, const Fraction& f2)
+{
+	return { f1.m_numerator * f2.m_numerator, f1.m_denominator * f2.m_denominator };
+}
+
+Fraction operator*(const Fraction& f1, int value)
+{
+	return { f1.m_numerator * value, f1.m_denominator };
+}
+
+Fraction operator*(int value, const Fraction& f1)
+{
+	return { f1.m_numerator * value, f1.m_denominator };
+}
+
+std::ostream& operator<<(std::ostream& out, const Fraction& f1)
+{
+	out << f1.m_numerator << '/' << f1.m_denominator;
+	return out;
+}
+
+std::istream& operator>>(std::istream& in, Fraction& f1)
+{
+	// Overwrite the values of f1
+	in >> f1.m_numerator;
+
+	// Ignore the '/' separator
+	in.ignore(std::numeric_limits<std::streamsize>::max(), '/');
+
+	in >> f1.m_denominator;
+
+	// Since we overwrite the existing f1, we need to reduce again
+	f1.reduce();
+
+	return in;
+}
+
+int main()
+{
+	Fraction f1;
+	std::cout << "Enter fraction 1: ";
+	std::cin >> f1;
+
+	Fraction f2;
+	std::cout << "Enter fraction 2: ";
+	std::cin >> f2;
+
+	std::cout << f1 << " * " << f2 << " is " << f1 * f2 << '\n'; // note: The result of f1 * f2 is an r-value
+
+	return 0;
+}
+```
+
+
