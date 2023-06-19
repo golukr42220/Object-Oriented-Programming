@@ -1,6 +1,7 @@
 
 - ****Ambiguity Resolution in Inheritance****
 
+[What Is the Diamond Problem in C++? How to Spot It and How to Fix It](https://www.makeuseof.com/what-is-diamond-problem-in-cpp/)
 
 Ambiguity in inheritance can be defined as when one class is derived for two or more base classes then there are chances that the base classes have functions with the same name. So it will confuse derived class to choose from similar name functions. To solve this ambiguity scope resolution operator is used “::”. An example program is shown below to demonstrate the concept of ambiguity resolution in inheritance.
 
