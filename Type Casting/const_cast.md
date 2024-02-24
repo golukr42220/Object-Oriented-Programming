@@ -1,10 +1,11 @@
-const_cast
-const_cast is a type of casting in C++ that allows you to remove or add constness to a variable. In other words, it enables you to modify a const or volatile object, or change a pointer or reference to a const or volatile type. This is useful in certain scenarios when you need to pass a const variable as an argument or when a function parameter requires a non-const type, but you want to make sure the variable remains constant throughout the code.
+# const cast
 
-Keep in mind that using const_cast to modify a truly const variable can lead to undefined behavior, so it is best to use this feature only when absolutely necessary.
+`const_cast` is a type of casting in C++ that allows you to remove or add `constness to a variable`. In other words, it enables you to modify a `const or volatile` object, or change a pointer or reference to a `const or volatile` type. This is useful in certain scenarios when you need to pass a const variable as an argument or when a function parameter requires a `non-const` type, but you want to make sure the variable remains `constant` throughout the code.
+
+Keep in mind that using `const_cast` to modify a truly const variable can lead to undefined behavior, so it is best to use this feature only when absolutely necessary.
 
 Example
-Here’s a code example showing how to use const_cast:
+Here’s a code example showing how to use `const_cast`:
 ```cpp
 #include <iostream>
 
