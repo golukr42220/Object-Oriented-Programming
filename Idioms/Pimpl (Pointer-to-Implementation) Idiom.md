@@ -72,6 +72,21 @@ void PublicClass::doSomething() {
 #ifndef IMPL_H
 #define IMPL_H
 
+/*
+In C++, PublicClass::Impl is a nested class declaration within the PublicClass class.
+
+When you see PublicClass::Impl, it means that Impl is a class defined within the scope of PublicClass.
+This nested class is accessible only within the context of its enclosing class, PublicClass, unless specific access
+modifiers are used to grant access from outside.
+
+Here's a breakdown:
+
+PublicClass::Impl: This syntax specifies that Impl is a class nested within the PublicClass class.
+PublicClass: This is the outer class or enclosing class.
+Impl: This is the nested class or inner class.
+Using nested classes can help organize code and improve encapsulation by grouping related classes together. It can
+also aid in reducing namespace pollution by keeping related classes within the scope of their parent class.
+*/
 class PublicClass::Impl {
 public:
     void doSomething(); // Actual implementation
@@ -91,6 +106,38 @@ void PublicClass::Impl::doSomething() {
     std::cout << "Doing something..." << std::endl;
 }
 ```
+
+```cpp
+// main.cpp
+#include "public_class.h"
+#include <iostream>
+
+int main() {
+    // Create an instance of PublicClass
+    PublicClass obj;
+
+    // Call the doSomething() function
+    obj.doSomething();
+
+    return 0;
+}
+
+/*
+Compilation and Execution:
+To compile and run this code, you would typically use a C++ compiler such as g++ or clang++. Assuming all source files
+are in the same directory, you can compile them using:
+
+g++ -o program main.cpp public_class.cpp impl.cpp
+This will generate an executable named program, which you can run:
+
+bash
+Copy code
+./program
+You should see the output "Doing something..." printed to the console, demonstrating that the doSomething() function
+was successfully called through the Pimpl idiom.
+*/
+```
+
 **Benefits:**
 
 `Encapsulation:` Clients only see the public interface, which hides the implementation details. This promotes encapsulation and information hiding.
