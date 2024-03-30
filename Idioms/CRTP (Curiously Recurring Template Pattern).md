@@ -75,6 +75,10 @@ int main() {
 
 **Detailed Explanation:**
 
+In this example, the Base class is a template that takes a single type parameter. `DerivedClass1` and `DerivedClass2` are derived from their respective specialization of `Base`. CRTP is employed to allow custom implementations of the `implementation()` function in `derived` classes while providing a default behavior in the `Base` class. The `interface()` function in the Base class is a template for the `derived` class’s behavior and calls the corresponding `implementation()` function based on the static type.
+
+This pattern enables you to override certain behavior in derived classes with additional functionality, all while avoiding the overhead of virtual function calls and, in turn, achieving a higher degree of efficiency at runtime
+
 **Base Class Template (CRTP):**
 
 - The `Base` class template is defined with a single template parameter, Derived, which represents the `derived` class inheriting from it.
