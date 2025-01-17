@@ -42,7 +42,7 @@ class Phone {
 	}
 };
 
-class CameraPhone {
+class CameraPhone: public Phone {
 	.
 	.
 	.
